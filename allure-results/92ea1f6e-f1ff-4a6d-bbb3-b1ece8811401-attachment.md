@@ -1,0 +1,234 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: demoprojectaddtocart.spec.js >> Add To Cart and Purchase Functionality >> TC09 - Add Monitor product and complete purchase
+- Location: tests\demoprojectaddtocart.spec.js:95:5
+
+# Error details
+
+```
+TypeError: Cannot read properties of undefined (reading 'message')
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - dialog "Place order" [active] [ref=e2]:
+    - document [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - heading "Place order" [level=5] [ref=e6]
+          - button "Close" [ref=e7] [cursor=pointer]: ×
+        - generic [ref=e9]:
+          - generic [ref=e10]: "Total:"
+          - generic [ref=e11]:
+            - generic [ref=e12]: "Name:"
+            - 'textbox "Total: Name:" [ref=e13]': Anupama
+          - generic [ref=e14]:
+            - generic [ref=e15]: "Country:"
+            - textbox "Country:" [ref=e16]: India
+          - generic [ref=e17]:
+            - generic [ref=e18]: "City:"
+            - textbox "City:" [ref=e19]: Kottayam
+          - generic [ref=e20]:
+            - generic [ref=e21]: "Credit card:"
+            - textbox "Credit card:" [ref=e22]: "123456789012"
+          - generic [ref=e23]:
+            - generic [ref=e24]: "Month:"
+            - textbox "Month:" [ref=e25]: May
+          - generic [ref=e26]:
+            - generic [ref=e27]: "Year:"
+            - textbox "Year:" [ref=e28]: "2026"
+        - generic [ref=e30]:
+          - button "Close" [ref=e31]
+          - button "Purchase" [ref=e32]
+  - text:             
+  - navigation [ref=e33]:
+    - generic [ref=e34]:
+      - link "PRODUCT STORE" [ref=e35] [cursor=pointer]:
+        - /url: index.html
+        - img [ref=e36]
+        - text: PRODUCT STORE
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link "Home (current)" [ref=e40] [cursor=pointer]:
+            - /url: index.html
+            - text: Home
+            - generic [ref=e41]: (current)
+        - listitem [ref=e42]:
+          - link "Contact" [ref=e43] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e44]:
+          - link "About us" [ref=e45] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e46]:
+          - link "Cart" [ref=e47] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e48]:
+          - link "Log in" [ref=e49] [cursor=pointer]:
+            - /url: "#"
+        - listitem
+        - listitem
+        - listitem [ref=e50]:
+          - link "Sign up" [ref=e51] [cursor=pointer]:
+            - /url: "#"
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - heading "Products" [level=2] [ref=e55]
+      - table [ref=e57]:
+        - rowgroup [ref=e58]:
+          - row "Pic Title Price x" [ref=e59]:
+            - columnheader "Pic" [ref=e60]
+            - columnheader "Title" [ref=e61]
+            - columnheader "Price" [ref=e62]
+            - columnheader "x" [ref=e63]
+        - rowgroup
+    - generic [ref=e64]:
+      - heading "Total" [level=2] [ref=e65]
+      - generic:
+        - generic:
+          - heading [level=3]
+      - button "Place Order" [ref=e66]
+  - generic [ref=e68]:
+    - generic [ref=e71]:
+      - heading "About Us" [level=4] [ref=e72]
+      - paragraph [ref=e73]: We believe performance needs to be validated at every stage of the software development cycle and our open source compatible, massively scalable platform makes that a reality.
+    - generic [ref=e76]:
+      - heading "Get in Touch" [level=4] [ref=e77]
+      - paragraph [ref=e78]: "Address: 2390 El Camino Real"
+      - paragraph [ref=e79]: "Phone: +440 123456"
+      - paragraph [ref=e80]: "Email: demo@blazemeter.com"
+    - heading "PRODUCT STORE" [level=4] [ref=e84]:
+      - img [ref=e85]
+      - text: PRODUCT STORE
+  - contentinfo [ref=e86]:
+    - paragraph [ref=e87]: Copyright © Product Store
+  - generic [ref=e90]:
+    - heading "Thank you for your purchase!" [level=2] [ref=e96]
+    - paragraph [ref=e97]:
+      - text: "Id: 7859037"
+      - text: "Amount: 0 USD"
+      - text: "Card Number: 123456789012"
+      - text: "Name: Anupama"
+      - text: "Date: 26/4/2026"
+    - button "OK" [ref=e100]
+```
+
+# Test source
+
+```ts
+  29  |     await expect(
+  30  |         loginPage.welcomeText
+  31  |     ).toBeVisible();
+  32  | }
+  33  | 
+  34  | test.describe(
+  35  |     'Add To Cart and Purchase Functionality',
+  36  |     () => {
+  37  | 
+  38  |     test(
+  39  |         'TC07 - Select product and add to cart',
+  40  |         async ({ page }) => {
+  41  | 
+  42  |         await loginUser(page);
+  43  | 
+  44  |         const cartPage = new CartPage(page);
+  45  | 
+  46  |         await cartPage.selectFirstProduct();
+  47  | 
+  48  |         const alertMessage =
+  49  |             await cartPage.addToCartAndAcceptAlert();
+  50  | 
+  51  |         expect(alertMessage)
+  52  |             .toContain('Product added');
+  53  |     });
+  54  | 
+  55  |     test(
+  56  |         'TC08 - Add Phone product and complete purchase',
+  57  |         async ({ page }) => {
+  58  | 
+  59  |         await loginUser(page);
+  60  | 
+  61  |         const cartPage = new CartPage(page);
+  62  | 
+  63  |         await cartPage.goToCategory('phones');
+  64  | 
+  65  |         await cartPage.selectProductByName(
+  66  |             'Samsung galaxy s6'
+  67  |         );
+  68  | 
+  69  |         const alertMessage =
+  70  |             await cartPage.addToCartAndAcceptAlert();
+  71  | 
+  72  |         expect(alertMessage)
+  73  |             .toContain('Product added');
+  74  | 
+  75  |         await cartPage.goToCart();
+  76  | 
+  77  |         await cartPage.clickPlaceOrder();
+  78  | 
+  79  |         await cartPage.fillOrderForm(
+  80  |             testData.placeorderDetails
+  81  |         );
+  82  | 
+  83  |         await cartPage.clickPurchase();
+  84  | 
+  85  |         const confirmationText =
+  86  |             await cartPage.getConfirmationText();
+  87  | expect(confirmationText)
+  88  |     .toContain(
+  89  |         testData.purchaseSuccessMessage
+  90  |     )
+  91  | console.log(confirmationText);
+  92  |         await cartPage.clickConfirmOk();
+  93  |     });
+  94  | 
+  95  |     test(
+  96  |         'TC09 - Add Monitor product and complete purchase',
+  97  |         async ({ page }) => {
+  98  | 
+  99  |         await loginUser(page);
+  100 | 
+  101 |         const cartPage = new CartPage(page);
+  102 | 
+  103 |         await cartPage.goToCategory('monitors');
+  104 | 
+  105 |         await cartPage.selectProductByName(
+  106 |             'Apple monitor 24'
+  107 |         );
+  108 | 
+  109 |         const alertMessage =
+  110 |             await cartPage.addToCartAndAcceptAlert();
+  111 | 
+  112 |         expect(alertMessage)
+  113 |             .toContain('Product added');
+  114 | 
+  115 |         await cartPage.goToCart();
+  116 | 
+  117 |         await cartPage.clickPlaceOrder();
+  118 | 
+  119 |         await cartPage.fillOrderForm(
+  120 |             testData.placeorderDetails
+  121 |         );
+  122 | 
+  123 |         await cartPage.clickPurchase();
+  124 | 
+  125 |         const confirmationText =
+  126 |             await cartPage.getConfirmationText();
+  127 | expect(confirmationText)
+  128 |     .toContain(
+> 129 |         testData.purchaseSuccessMessage.message
+      |                                         ^ TypeError: Cannot read properties of undefined (reading 'message')
+  130 |     )
+  131 | 
+  132 |         await cartPage.clickConfirmOk();
+  133 |     })
+  134 | 
+  135 | });
+```

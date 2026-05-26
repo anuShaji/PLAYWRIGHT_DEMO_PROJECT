@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","15212","TC08 - Add Phone product and complete purchase","chromium","2026-05-26","failed","2026-05-26","Add To Cart and Purchase Functionality","demoprojectaddtocart.spec.js","",""
+"","11372","TC07 - Select product and add to cart","chromium","2026-05-26","passed","2026-05-26","Add To Cart and Purchase Functionality","demoprojectaddtocart.spec.js","",""
+"","16601","TC09 - Add Monitor product and complete purchase","chromium","2026-05-26","failed","2026-05-26","Add To Cart and Purchase Functionality","demoprojectaddtocart.spec.js","",""

@@ -84,10 +84,11 @@ test.describe(
 
         const confirmationText =
             await cartPage.getConfirmationText();
-
-        expect(confirmationText)
-            .toContain('Id');
-
+expect(confirmationText)
+    .toContain(
+        testData.purchaseSuccessMessage.message
+    )
+console.log(confirmationText);
         await cartPage.clickConfirmOk();
     });
 
@@ -123,11 +124,12 @@ test.describe(
 
         const confirmationText =
             await cartPage.getConfirmationText();
-
-        expect(confirmationText)
-            .toContain('Id');
+expect(confirmationText)
+    .toContain(
+        testData.purchaseSuccessMessage.message
+    )
 
         await cartPage.clickConfirmOk();
-    });
+    })
 
 });

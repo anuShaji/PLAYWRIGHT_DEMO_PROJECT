@@ -36,5 +36,7 @@
     "creditcard": "123456789012",
     "month": "May",
     "year": "2026"
-  }
-}
+  },
+  "purchaseSuccessMessage": {
+    "message": "Thank you for your purchase!"
+}}

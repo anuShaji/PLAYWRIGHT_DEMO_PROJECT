@@ -32,10 +32,12 @@
         "month":"January",
         "year":"1990"
 
-    }
+    },
 
-}
-  
+ "purchaseSuccessMessage": {
+    "message": "Thank you for your purchase!"
+  }
+} 
 
     
  

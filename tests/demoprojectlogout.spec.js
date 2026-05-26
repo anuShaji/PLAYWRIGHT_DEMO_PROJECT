@@ -8,7 +8,7 @@ const { LogoutPage } =
 require('../Pages/LogoutPage');
 
 const testData =
-require('../TestData/testdata.json');
+require('../utils/testdata.json');
 
 test.describe(
     'Logout Functionality',

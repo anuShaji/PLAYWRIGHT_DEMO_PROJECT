@@ -53,7 +53,7 @@ class CartPage {
             page.locator('.sweet-alert');
 
         this.confirmText =
-            page.locator('.sweet-alert p');
+    page.locator('.sweet-alert h2');
 
         this.confirmOkBtn =
             page.locator('.confirm');
