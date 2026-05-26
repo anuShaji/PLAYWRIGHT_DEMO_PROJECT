@@ -1,54 +1,99 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } =
+require('@playwright/test');
 
-const { SignupPage } = require('../Pages/SignupPage');
+const { SignupPage } =
+require('../Pages/SignupPage');
 
-const testData = require('../utils/testdata.json');
+const testData =
+require('../utils/testdata.json');
 
-test.describe('Signup Functionality', () => {
 
-    test('TC01 - Sign Up -> Enter Data -> Click Sign Up', async ({ page }) => {
+// TC01 - Verify successful signup functionality
 
-        const signupPage = new SignupPage(page);
+test(
+    'TC01 - Sign Up -> Enter Data -> Click Sign Up',
+    async ({ page }) => {
 
-        const uniqueUsername =
-            testData.signup.username;
+    const signupPage =
+        new SignupPage(page);
 
-        await signupPage.navigateToApplication();
+    const uniqueUsername =
+        testData.signup.username;
 
-        await signupPage.clickSignupLink();
+    // Navigate to application
+    await signupPage
+        .navigateToApplication();
 
-        await signupPage.enterUsername(uniqueUsername);
+    // Open signup modal
+    await signupPage
+        .clickSignupLink();
 
-        await signupPage.enterPassword(testData.signup.password);
+    // Enter username
+    await signupPage
+        .enterUsername(uniqueUsername);
 
-        page.once('dialog', async dialog => {
+    // Enter password
+    await signupPage
+        .enterPassword(
+            testData.signup.password
+        );
 
-            console.log(dialog.message());
+    // Handle signup success alert
+    page.once(
+        'dialog',
+        async dialog => {
 
-            await dialog.accept();
-        });
+        console.log(
+            dialog.message()
+        );
 
-        await signupPage.clickSignupButton();
-
-        await page.waitForTimeout(2000);
+        await dialog.accept();
     });
 
-    test('TC02 - Sign Up -> Enter Data -> Click Close', async ({ page }) => {
+    // Click signup button
+    await signupPage
+        .clickSignupButton();
 
-        const signupPage = new SignupPage(page);
+    await page.waitForTimeout(2000);
+});
 
-        await signupPage.navigateToApplication();
 
-        await signupPage.clickSignupLink();
-         //await this.username.clear();
+// TC02 - Verify signup modal close functionality
 
-        await signupPage.enterUsername(testData.signup.username);
+test(
+    'TC02 - Sign Up -> Enter Data -> Click Close',
+    async ({ page }) => {
 
-        await signupPage.enterPassword(testData.signup.password);
+    const signupPage =
+        new SignupPage(page);
 
-        await signupPage.clickCloseButton();
+    // Navigate to application
+    await signupPage
+        .navigateToApplication();
 
-        expect(await signupPage.isSignupModalClosed()).toBeTruthy();
-    });
+    // Open signup modal
+    await signupPage
+        .clickSignupLink();
 
+    // Enter username
+    await signupPage
+        .enterUsername(
+            testData.signup.username
+        );
+
+    // Enter password
+    await signupPage
+        .enterPassword(
+            testData.signup.password
+        );
+
+    // Close signup popup
+    await signupPage
+        .clickCloseButton();
+
+    // Verify popup closed successfully
+    expect(
+        await signupPage
+            .isSignupModalClosed()
+    ).toBeTruthy();
 });

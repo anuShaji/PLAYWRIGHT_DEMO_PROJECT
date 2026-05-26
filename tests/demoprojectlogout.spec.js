@@ -10,45 +10,47 @@ require('../Pages/LogoutPage');
 const testData =
 require('../utils/testdata.json');
 
-test.describe(
-    'Logout Functionality',
-    () => {
 
-    test(
-        'TC10 - Login with valid credentials and logout',
-        async ({ page }) => {
+// TC10 - Verify logout functionality
 
-        const loginPage =
-            new LoginPage(page);
+test(
+    'TC10 - Login with valid credentials and logout',
+    async ({ page }) => {
 
-        const logoutPage =
-            new LogoutPage(page);
+    const loginPage =new LoginPage(page);
 
-        const creds =
-            testData.validlogincredentials;
+    const logoutPage =new LogoutPage(page);
 
+    const credentials = testData.validlogincredentials;
+    // Navigate to application
+    await loginPage
+        .navigateToApplication();
+
+    // Perform login
+    const alertMessage =
+        await loginPage.login(
+            credentials.username,
+            credentials.password
+        );
+
+    // Verify login successful
+    expect(alertMessage)
+        .toBe('');
+
+    // Verify logout link is visible
+    expect(
         await loginPage
-            .navigateToApplication();
+            .isLogoutVisible()
+    ).toBeTruthy();
 
-        const alertMessage =
-            await loginPage.login(
-                creds.username,
-                creds.password
-            );
+    // Perform logout
+    await logoutPage
+        .clickLogout();
 
-        expect(alertMessage)
-            .toBe('');
-
-        expect(
-            await loginPage.isLogoutVisible()
-        ).toBeTruthy();
-
-        await logoutPage.clickLogout();
-
-        expect(
-            await logoutPage.isLoggedOut()
-        ).toBeTruthy();
-
-    });
+    // Verify user logged out successfully
+    expect(
+        await logoutPage
+            .isLoggedOut()
+    ).toBeTruthy();
 
 });

@@ -1,85 +1,138 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } =
+require('@playwright/test');
 
-const { LoginPage } = require('../Pages/LoginPage');
+const { LoginPage } =
+require('../Pages/LoginPage');
 
-const testData = require('../utils/testdata.json');
+const testData =
+require('../utils/testdata.json');
 
-test.describe('Login Functionality', () => {
 
-    test('TC03 - Verify login with valid credentials', async ({ page }) => {
+// TC03 - Verify login with valid credentials
 
-    const loginPage = new LoginPage(page);
+test(
+    'TC03 - Verify login with valid credentials',
+    async ({ page }) => {
 
-    const data = testData.validlogincredentials;
+    const loginPage =
+        new LoginPage(page);
 
-    await loginPage.navigateToApplication();
+    const data =
+        testData.validlogincredentials;
 
-    const alertMessage = await loginPage.login(
-        data.username,
-        data.password
-    );
+    await loginPage
+        .navigateToApplication();
 
-    expect(alertMessage).toBe('');
+    const alertMessage =
+        await loginPage.login(
+            data.username,
+            data.password
+        );
 
-    const welcomeText = await loginPage.getWelcomeText();
+    // Verify no alert appears
+    expect(alertMessage)
+        .toBe('');
 
-    expect(welcomeText).toContain(data.username);
+    // Capture welcome text
+    const welcomeText =
+        await loginPage.getWelcomeText();
 
-    expect(await loginPage.isLogoutVisible())
-        .toBeTruthy();
+    // Verify logged in username
+    expect(welcomeText)
+        .toContain(data.username);
+
+    // Verify logout link visibility
+    expect(
+        await loginPage.isLogoutVisible()
+    ).toBeTruthy();
 });
-    test('TC04 - Verify login with invalid username and valid password',
-        async ({ page }) => {
 
-        const loginPage = new LoginPage(page);
 
-        const data = testData.invalidlogincredentials[0];
+// TC04 - Verify login with invalid username and valid password
 
-        await loginPage.navigateToApplication();
+test(
+    'TC04 - Verify login with invalid username and valid password',
+    async ({ page }) => {
 
-        const alertMessage = await loginPage.login(
+    const loginPage =
+        new LoginPage(page);
+
+    const data =
+        testData.invalidlogincredentials[0];
+
+    await loginPage
+        .navigateToApplication();
+
+    const alertMessage =
+        await loginPage.login(
             data.username,
             data.password
         );
 
-        expect(alertMessage.toLowerCase())
-            .toContain('user does not exist');
-    });
+    // Verify user does not exist alert
+    expect(
+        alertMessage.toLowerCase()
+    ).toContain(
+        'user does not exist'
+    );
+});
 
-    test('TC05 - Verify login with valid username and invalid password',
-        async ({ page }) => {
 
-        const loginPage = new LoginPage(page);
+// TC05 - Verify login with valid username and invalid password
 
-        const data = testData.invalidlogincredentials[1];
+test(
+    'TC05 - Verify login with valid username and invalid password',
+    async ({ page }) => {
 
-        await loginPage.navigateToApplication();
+    const loginPage =
+        new LoginPage(page);
 
-        const alertMessage = await loginPage.login(
+    const data =
+        testData.invalidlogincredentials[1];
+
+    await loginPage
+        .navigateToApplication();
+
+    const alertMessage =
+        await loginPage.login(
             data.username,
             data.password
         );
 
-        expect(alertMessage.toLowerCase())
-            .toContain('wrong password');
-    });
+    // Verify wrong password alert
+    expect(
+        alertMessage.toLowerCase()
+    ).toContain(
+        'wrong password'
+    );
+});
 
-    test('TC06 - Verify login with invalid username and invalid password',
-        async ({ page }) => {
 
-        const loginPage = new LoginPage(page);
+// TC06 - Verify login with invalid username and invalid password
 
-        const data = testData.invalidlogincredentials[2];
+test(
+    'TC06 - Verify login with invalid username and invalid password',
+    async ({ page }) => {
 
-        await loginPage.navigateToApplication();
+    const loginPage =
+        new LoginPage(page);
 
-        const alertMessage = await loginPage.login(
+    const data =
+        testData.invalidlogincredentials[2];
+
+    await loginPage
+        .navigateToApplication();
+
+    const alertMessage =
+        await loginPage.login(
             data.username,
             data.password
         );
 
-        expect(alertMessage.toLowerCase())
-            .toContain('user does not exist');
-    });
-
+    // Verify user does not exist alert
+    expect(
+        alertMessage.toLowerCase()
+    ).toContain(
+        'user does not exist'
+    );
 });

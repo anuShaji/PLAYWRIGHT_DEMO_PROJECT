@@ -1,25 +1,31 @@
 // tests/demoprojectaddtocart.spec.js
-// TC07 – TC09 - Add to Cart and Purchase
-// Data source: TestData/testdata.xlsx
-//   Sheet "Products"        → Category, ProductName, TCReference
-//   Sheet "PurchaseDetails" → Name, Country, City, CreditCard, Month, Year
-//   Sheet "Login"  row 0    → valid credentials for beforeEach login
+// TC07 - TC09
+// Add To Cart and Purchase Functionality
+// Test data source: utils/testdata.json
+// Uses valid login credentials and purchase details from JSON file
 
-const { test, expect } = require('@playwright/test');
+const { test, expect } =
+require('@playwright/test');
 
-const { LoginPage } = require('../Pages/LoginPage');
+const { LoginPage } =
+require('../Pages/LoginPage');
 
-const { CartPage } = require('../Pages/CartPage');
+const { CartPage } =
+require('../Pages/CartPage');
 
-const testData = require('../utils/testdata.json');
+const testData =
+require('../utils/testdata.json');
 
 async function loginUser(page) {
 
-    const loginPage = new LoginPage(page);
+    const loginPage =
+        new LoginPage(page);
 
-    const creds = testData.validlogincredentials;
+    const creds =
+        testData.validlogincredentials;
 
-    await loginPage.navigateToApplication();
+    await loginPage
+        .navigateToApplication();
 
     await loginPage.login(
         creds.username,
@@ -30,106 +36,122 @@ async function loginUser(page) {
         loginPage.welcomeText
     ).toBeVisible();
 }
+// TC07 - Verify product can be added to cart
+test(
+    'TC07 - Select product and add to cart',
+    async ({ page }) => {
 
-test.describe(
-    'Add To Cart and Purchase Functionality',
-    () => {
+    await loginUser(page);
 
-    test(
-        'TC07 - Select product and add to cart',
-        async ({ page }) => {
+    const cartPage =
+        new CartPage(page);
 
-        await loginUser(page);
+    await cartPage.selectFirstProduct();//select first product
 
-        const cartPage = new CartPage(page);
+    const alertMessage =
+        await cartPage
+            .addToCartAndAcceptAlert();
 
-        await cartPage.selectFirstProduct();
+    expect(alertMessage)
+        .toContain('Product added');
+});
 
-        const alertMessage =
-            await cartPage.addToCartAndAcceptAlert();
+test(
+    'TC08 - Add Phone product and complete purchase',// TC08 - Verify phone product purchase flow
+    async ({ page }) => {
 
-        expect(alertMessage)
-            .toContain('Product added');
-    });
+    await loginUser(page);
 
-    test(
-        'TC08 - Add Phone product and complete purchase',
-        async ({ page }) => {
+    const cartPage =
+        new CartPage(page);
 
-        await loginUser(page);
+    await cartPage.goToCategory(
+        'phones'
+    );
 
-        const cartPage = new CartPage(page);
+    await cartPage.selectProductByName(
+        'Samsung galaxy s6'
+    );
 
-        await cartPage.goToCategory('phones');
+    const alertMessage =
+        await cartPage
+            .addToCartAndAcceptAlert();
 
-        await cartPage.selectProductByName(
-            'Samsung galaxy s6'
+    expect(alertMessage)
+        .toContain('Product added');
+
+    await cartPage.goToCart();
+
+    await cartPage.clickPlaceOrder();
+
+    await cartPage.fillOrderForm(
+        testData.placeorderDetails
+    );
+
+    await cartPage.clickPurchase();
+
+    const confirmationText =
+        await cartPage
+            .getConfirmationText();
+
+    console.log(confirmationText);
+
+    expect(confirmationText)
+        .toContain(
+            testData
+                .purchaseSuccessMessage
+                .message
         );
 
-        const alertMessage =
-            await cartPage.addToCartAndAcceptAlert();
+    await cartPage.clickConfirmOk();
+});
 
-        expect(alertMessage)
-            .toContain('Product added');
+test(
+    'TC09 - Add Monitor product and complete purchase',// TC09 - Verify monitor product purchase flow
+    async ({ page }) => {
 
-        await cartPage.goToCart();
+    await loginUser(page);
 
-        await cartPage.clickPlaceOrder();
+    const cartPage =
+        new CartPage(page);
 
-        await cartPage.fillOrderForm(
-            testData.placeorderDetails
+    await cartPage.goToCategory(
+        'monitors'
+    );
+
+    await cartPage.selectProductByName(
+        'Apple monitor 24'
+    );
+
+    const alertMessage =
+        await cartPage
+            .addToCartAndAcceptAlert();
+
+    expect(alertMessage)
+        .toContain('Product added');
+
+    await cartPage.goToCart();
+
+    await cartPage.clickPlaceOrder();
+
+    await cartPage.fillOrderForm(
+        testData.placeorderDetails
+    );
+
+    await cartPage.clickPurchase();
+
+    const confirmationText =
+        await cartPage
+            .getConfirmationText();
+
+    console.log(confirmationText);
+
+    expect(confirmationText)
+        .toContain(
+            testData
+                .purchaseSuccessMessage
+                .message
         );
 
-        await cartPage.clickPurchase();
-
-        const confirmationText =
-            await cartPage.getConfirmationText();
-expect(confirmationText)
-    .toContain(
-        testData.purchaseSuccessMessage.message
-    )
-console.log(confirmationText);
-        await cartPage.clickConfirmOk();
-    });
-
-    test(
-        'TC09 - Add Monitor product and complete purchase',
-        async ({ page }) => {
-
-        await loginUser(page);
-
-        const cartPage = new CartPage(page);
-
-        await cartPage.goToCategory('monitors');
-
-        await cartPage.selectProductByName(
-            'Apple monitor 24'
-        );
-
-        const alertMessage =
-            await cartPage.addToCartAndAcceptAlert();
-
-        expect(alertMessage)
-            .toContain('Product added');
-
-        await cartPage.goToCart();
-
-        await cartPage.clickPlaceOrder();
-
-        await cartPage.fillOrderForm(
-            testData.placeorderDetails
-        );
-
-        await cartPage.clickPurchase();
-
-        const confirmationText =
-            await cartPage.getConfirmationText();
-expect(confirmationText)
-    .toContain(
-        testData.purchaseSuccessMessage.message
-    )
-
-        await cartPage.clickConfirmOk();
-    })
-
+    await cartPage.clickConfirmOk();
 });
