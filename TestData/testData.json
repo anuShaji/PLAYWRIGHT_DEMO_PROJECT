@@ -1,0 +1,31 @@
+{
+  "signup": {
+    "username": "anu555555",
+    "password": "anu555555"
+  },
+
+  "validlogincredentials": {
+    "username": "anu555555",
+    "password": "anu555555"
+  },
+
+  "invalidlogincredentials": [
+    {
+      "testcase": "Invalidusername and ValidPassword",
+      "username": "nouser555555",
+      "password": "anu555555"
+    },
+
+    {
+      "testcase": "ValidUsername and InvalidPassword",
+      "username": "anu555555",
+      "password": "wrongpassword"
+    },
+
+    {
+      "testcase": "InvalidUsername and InvalidPassword",
+      "username": "invalid555555",
+      "password": "wrongpassword"
+    }
+  ]
+}

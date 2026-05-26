@@ -1,0 +1,20 @@
+{
+  "name": "playwrightdemoproject",
+  "version": "1.0.0",
+  "description": "Playwright POM framework with Excel data reader for demoblaze.com",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:signup": "npx playwright test tests/demoprojectsignup.spec.js",
+    "test:login": "npx playwright test tests/demoprojectlogin.spec.js",
+    "test:cart": "npx playwright test tests/demoprojectaddtocart.spec.js",
+    "test:logout": "npx playwright test tests/demoprojectlogout.spec.js",
+    "report": "npx playwright show-report allure-report"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}

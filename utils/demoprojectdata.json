@@ -1,0 +1,44 @@
+{
+  "signupcredentials": {
+             "username": "AnupamaS",
+            "password": "Anupama1997@demo"   
+    },
+    "validlogincredentials":{
+        "username":"AnupamaS",
+        "password":"Anupama1997@demo"
+    },
+    "invalidlogincredentials":[
+        {
+            "testcase":"Invalidusername and ValidPassword",
+            "username":"test",
+            "password":"Anupama19973@demo"
+        },
+        {
+            "testcase":"ValidUsername and InvalidPassword",
+            "username":"AnupamaS",
+            "password":"testpassword"
+        },
+        {
+            "testcase":"InvalidUsername and InvalidPassword",
+            "username":"testAnu",
+            "password":"testpassword"
+        }
+    ],
+    "placeorderDetails":{
+        "name":"TestAnu",
+        "country":"TestCountry",
+        "city":"TestCity",
+        "creditcard":"1234567890",
+        "month":"January",
+        "year":"1990"
+
+    }
+
+}
+  
+
+    
+ 
+   
+
+ 
