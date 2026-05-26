@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 const { SignupPage } = require('../Pages/SignupPage');
 
-const testData = require('../TestData/testdata.json');
+const testData = require('../utils/testdata.json');
 
 test.describe('Signup Functionality', () => {
 

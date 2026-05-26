@@ -11,7 +11,7 @@ const { LoginPage } = require('../Pages/LoginPage');
 
 const { CartPage } = require('../Pages/CartPage');
 
-const testData = require('../TestData/testdata.json');
+const testData = require('../utils/testdata.json');
 
 async function loginUser(page) {
 

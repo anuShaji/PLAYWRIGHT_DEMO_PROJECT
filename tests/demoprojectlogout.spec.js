@@ -1,34 +1,54 @@
-// tests/demoprojectlogout.spec.js
-// TC10 - Logout
-// Data source: TestData/testdata.xlsx  →  Sheet: Login  row 0 (valid credentials)
+const { test, expect } =
+require('@playwright/test');
 
-const { test, expect } = require('@playwright/test');
-const { LoginPage }    = require('../Pages/LoginPage');
-const { LogoutPage }   = require('../Pages/LogoutPage');
-const excel            = require('../utils/excelReader');
+const { LoginPage } =
+require('../Pages/LoginPage');
 
-test.describe('Logout Tests | demoblaze.com', () => {
+const { LogoutPage } =
+require('../Pages/LogoutPage');
 
-  /**
-   * TC10: Login with valid credentials → Logout
-   */
-  test('TC10 - Login with valid credentials and logout', async ({ page }) => {
-    const creds     = excel.getLoginRow(0);      // valid login row from Excel
-    const loginPage = new LoginPage(page);
+const testData =
+require('../TestData/testdata.json');
 
-    await loginPage.navigateTo();
-    await loginPage.login(creds.Username, creds.Password);
-    await loginPage.waitForWelcome();
+test.describe(
+    'Logout Functionality',
+    () => {
 
-    // Confirm we are logged in
-    expect(await loginPage.isLoggedIn()).toBeTruthy();
+    test(
+        'TC10 - Login with valid credentials and logout',
+        async ({ page }) => {
 
-    // Perform logout
-    const logoutPage = new LogoutPage(page);
-    await logoutPage.clickLogout();
+        const loginPage =
+            new LoginPage(page);
 
-    // Verify logged out
-    expect(await logoutPage.isLoggedOut()).toBeTruthy();
-  });
+        const logoutPage =
+            new LogoutPage(page);
+
+        const creds =
+            testData.validlogincredentials;
+
+        await loginPage
+            .navigateToApplication();
+
+        const alertMessage =
+            await loginPage.login(
+                creds.username,
+                creds.password
+            );
+
+        expect(alertMessage)
+            .toBe('');
+
+        expect(
+            await loginPage.isLogoutVisible()
+        ).toBeTruthy();
+
+        await logoutPage.clickLogout();
+
+        expect(
+            await logoutPage.isLoggedOut()
+        ).toBeTruthy();
+
+    });
 
 });

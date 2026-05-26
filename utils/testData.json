@@ -27,5 +27,14 @@
       "username": "invalid555555",
       "password": "wrongpassword"
     }
-  ]
+  ],
+
+  "placeorderDetails": {
+    "name": "Anupama",
+    "country": "India",
+    "city": "Kottayam",
+    "creditcard": "123456789012",
+    "month": "May",
+    "year": "2026"
+  }
 }
